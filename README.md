@@ -6,7 +6,7 @@ Clonați repository-ul:
 
 bash
 Copy code
-git clone https://github.com/exemplu/digit_one.git
+git clone 
 Instalați dependințele:
 
 bash
