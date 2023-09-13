@@ -27,10 +27,12 @@ const mongoose_1 = __importStar(require("mongoose"));
 const InventorySchema = new mongoose_1.Schema({
     name: { type: String, required: true },
     quantityType: { type: String, required: true },
-    items: [{
+    items: [
+        {
             name: { type: String },
             quantity: { type: Number },
             financialValue: { type: Number }
-        }]
+        }
+    ]
 });
 exports.default = mongoose_1.default.model('Inventory', InventorySchema);

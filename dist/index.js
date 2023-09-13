@@ -11,7 +11,7 @@ app.use(express_1.default.json());
 mongoose_1.default.connect('mongodb://localhost:27017/digit_one', {
     useNewUrlParser: true,
     useUnifiedTopology: true
-});
+}); // am avut o eraore aici asa ca am incercat sa trect peste ea print-un "as any"
 app.use('/api', inventoryRoutes_1.default);
 app.listen(3000, () => {
     console.log('Server running on http://localhost:3000/');
