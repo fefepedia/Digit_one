@@ -1,7 +1,6 @@
 import SuperInventory from '../models/SuperInventory';
 import { Request, Response } from 'express';
 
-// Create a SuperInventory
 export const createSuperInventory = async (req: Request, res: Response) => {
   try {
     const newSuperInventory = new SuperInventory();
@@ -13,7 +12,7 @@ export const createSuperInventory = async (req: Request, res: Response) => {
   }
 };
 
-// Add an Inventory to SuperInventory
+
 export const addInventoryToSuperInventory = async (req: Request, res: Response) => {
   try {
     const { superInventoryId, inventoryId } = req.body;
@@ -34,4 +33,4 @@ export const addInventoryToSuperInventory = async (req: Request, res: Response) 
   }
 };
 
-// ... You can also add functions like removeInventoryFromSuperInventory, getAllSuperInventories, etc.
+
