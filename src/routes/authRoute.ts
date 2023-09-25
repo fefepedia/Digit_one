@@ -77,7 +77,6 @@ router.post('/login', async (req: express.Request, res: express.Response) => {
     console.error("Error encountered:", error);
     res.status(500).send(error);
   }
-  console.log("good")
 });
 
 export default router;

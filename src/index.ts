@@ -14,8 +14,7 @@ import authDashboard from './routes/authDashboard';
 
 const app = express();
 
-const allowedOrigins = ['http://localhost3000/', 'http://localhost:3001/', 'http://localhost:3000/api/users/login', 'http://localhost:3001/login'];
-
+const allowedOrigins = ['http://localhost:3001', 'http://localhost:3000'];
 // Middleware
 app.use(bodyParser.json()); // Replaces the express.json() middleware for body parsing
 app.use(
