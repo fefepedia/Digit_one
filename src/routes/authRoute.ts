@@ -46,7 +46,7 @@ router.post('/register', async (req: express.Request, res: express.Response) => 
       return;
     } else {
       await user.save();
-      res.status(200).send({message: 'User created successfully'});
+      return res.status(200).send({message: 'User created successfully'});
 
     }
   } catch (error) {

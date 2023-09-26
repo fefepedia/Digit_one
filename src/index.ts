@@ -1,14 +1,10 @@
 import express, { Request, Response } from 'express';
 import dotenv from 'dotenv';
-
 import mongoose from 'mongoose';
 import cors from 'cors';
 import bodyParser from 'body-parser';
-
 import inventoryRoutes from './routes/inventoryRoutes';
 import superInventoryRoutes from './routes/superInventoryRoutes';
-
-// Assuming these paths are correct for your auth routes:
 import authRoute from './routes/authRoute';
 import authDashboard from './routes/authDashboard';
 
@@ -34,8 +30,8 @@ mongoose.connect('mongodb://127.0.0.1:27017/digit-one?directConnection=true', {
 app.get("/", (req: Request, res: Response) => {
     res.send(`Hey it's working !!`);
 });
-app.use('/api', inventoryRoutes);         
-app.use('/api', superInventoryRoutes);
+app.use('/api/invetory', inventoryRoutes);         
+app.use('/api/super-inventory', superInventoryRoutes);
 app.use("/api/users", authRoute);
 app.use("/api/dashboard", authDashboard);
 
