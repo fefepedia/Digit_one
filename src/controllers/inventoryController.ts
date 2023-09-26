@@ -47,6 +47,8 @@ export const updateInventoryItem = async (req: Request, res: Response) => {
   try {
     const inventoryItem = await InventoryItem.findByIdAndUpdate(req.params.id, req.body, { new: true });
     if (!inventoryItem) {
+      console.log("ID from request:", req.params.id);
+
       return res.status(404).json({ error: 'InventoryItem not found.' });
     }
     return res.status(200).json(inventoryItem);
@@ -80,6 +82,10 @@ export const removeInventoryItem = async (req: Request, res: Response) => {
     return res.status(500).json({ error: 'An error occurred while removing the inventory item.' });
   }
 };
+
+
+
+
 
 export const getAllItemsForInventory = async (req: Request, res: Response) => {
   try {
