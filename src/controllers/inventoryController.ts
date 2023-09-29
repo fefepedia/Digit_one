@@ -131,28 +131,22 @@ export const getAllItemsForInventory = async (req: Request, res: Response) => {
   console.log("Inside getAllItemsForInventory");
   try {
     const inventoryId = req.params.id;
-
-    // Debugging log:
     console.log("Trying to fetch items for inventoryId:", inventoryId);
-
-    // Check if the inventory exists
     const inventory = await Inventory.findById(inventoryId);
 
     if (!inventory) {
-      console.log("Inventory not found for ID:", inventoryId);  // Debugging log
+      console.log("Inventory not found for ID:", inventoryId);  
       return res.status(404).json({ error: 'Inventory not found.' });
     }
 
-    // Fetch the items for this inventory from the InventoryItem model
+    
     const items = await InventoryItem.find({ inventoryId: inventoryId });
 
-    console.log("Fetched items:", items);  // Debugging log
+    console.log("Fetched items:", items); 
 
     return res.status(200).json(items);
   } catch (error) {
-    console.error("Error while fetching items:", error);  // Debugging log
+    console.error("Error while fetching items:", error);  
     return res.status(500).json({ error: 'An error occurred while fetching the items.' });
   }
 };
-
-
