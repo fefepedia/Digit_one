@@ -12,6 +12,7 @@ interface IUser extends Document {
   lname: string;
   email: string;
   password: string;
+  role: string;
 }
 
 const registerSchema = Joi.object({
@@ -23,7 +24,6 @@ const registerSchema = Joi.object({
 });
 
 router.post('/register', async (req: express.Request, res: express.Response) => {
-  console.log(req.body)
   const emailExist = await User.findOne({ email: req.body.email });
   if (emailExist) {
     res.status(400).send('Email already exists');
