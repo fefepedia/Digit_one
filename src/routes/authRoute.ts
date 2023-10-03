@@ -19,6 +19,7 @@ const registerSchema = Joi.object({
   lname: Joi.string().min(3).required(),
   email: Joi.string().min(6).required().email(),
   password: Joi.string().min(6).required(),
+  role: Joi.string().valid('operator', 'admin', 'accountant').default('operator'),
 });
 
 router.post('/register', async (req: express.Request, res: express.Response) => {
@@ -37,6 +38,7 @@ router.post('/register', async (req: express.Request, res: express.Response) => 
     lname: req.body.lname,
     email: req.body.email,
     password: hashedPassword,
+    role: req.body.role,
   });
 
   try {
