@@ -9,8 +9,8 @@ router.put('/update-inventory-item/:id', updateInventoryItem);
 //router.patch('/patch-inventory');
 router.delete('/remove-inventory/:id', removeInventory);
 //router.get('/inventories');
-router.get('/inventory/:id/items', getAllItemsForInventory);
-router.get('/inventory/:id',getInventory);
+router.get('/:id/items', getAllItemsForInventory);
+router.get('/:id',getInventory);
 router.delete('/remove-inventory-item/:id', removeInventoryItem);
 router.post('/add-inventory-item', addInventoryItem);
 
