@@ -62,6 +62,7 @@ const loginSchema = Joi.object({
 });
 
 router.post('/login', async (req: express.Request, res: express.Response) => {
+  console.log(req.body);
   const user = await User.findOne({ email: req.body.email });
   if (!user) return res.status(400).send('Incorrect Email- ID');
 
