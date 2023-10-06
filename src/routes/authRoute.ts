@@ -1,19 +1,12 @@
 import express from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { Document } from 'mongoose';
-import User from '../models/User';
-import* as Joi from '@hapi/joi';
+import { Request, Response } from 'express'; // Import Request and Response types
+import User, { IUser } from '../models/User'; // Import your User model
+
+import * as Joi from '@hapi/joi';
 
 const router = express.Router();
-
-interface IUser extends Document {
-  fname: string;
-  lname: string;
-  email: string;
-  password: string;
-  role: string;
-}
 
 const registerSchema = Joi.object({
   fname: Joi.string().min(3).required(),
@@ -23,7 +16,7 @@ const registerSchema = Joi.object({
   role: Joi.string().valid('operator', 'admin', 'accountant').default('operator'),
 });
 
-router.post('/register', async (req: express.Request, res: express.Response) => {
+router.post('/register', async (req: Request, res: Response) => {
   const emailExist = await User.findOne({ email: req.body.email });
   if (emailExist) {
     res.status(400).send('Email already exists');
@@ -48,8 +41,7 @@ router.post('/register', async (req: express.Request, res: express.Response) => 
       return;
     } else {
       await user.save();
-      return res.status(200).send({message: 'User created successfully'});
-
+      return res.status(200).send({ message: 'User created successfully' });
     }
   } catch (error) {
     res.status(500).send(error);
@@ -61,7 +53,7 @@ const loginSchema = Joi.object({
   password: Joi.string().min(6).required(),
 });
 
-router.post('/login', async (req: express.Request, res: express.Response) => {
+router.post('/login', async (req: Request, res: Response) => {
   const user = await User.findOne({ email: req.body.email });
   if (!user) return res.status(400).send('Incorrect Email- ID');
 
@@ -76,7 +68,7 @@ router.post('/login', async (req: express.Request, res: express.Response) => {
       res.header('auth-token', token).send(token);
     }
   } catch (error) {
-    console.error("Error encountered:", error);
+    console.error('Error encountered:', error);
     res.status(500).send(error);
   }
 });
