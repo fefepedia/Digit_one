@@ -11,8 +11,8 @@ import authDashboard from './routes/authDashboard';
 const app = express();
 
 const allowedOrigins = ['http://localhost:3001', 'http://localhost:3000'];
-// Middleware
-app.use(bodyParser.json()); // Replaces the express.json() middleware for body parsing
+
+app.use(bodyParser.json());
 app.use(
   cors({
     origin: function (origin, callback) {
@@ -29,10 +29,9 @@ app.use(
 );
 
 
-// Environment variables setup
 dotenv.config();
 console.log(process.env.TOKEN_SECRET);
-// Database connection
+
 mongoose.connect('mongodb://127.0.0.1:27017/digit-one?directConnection=true', {
   useNewUrlParser: true,
   useUnifiedTopology: true
@@ -40,17 +39,11 @@ mongoose.connect('mongodb://127.0.0.1:27017/digit-one?directConnection=true', {
   .catch((error) => console.error("DB Connection Error:", error));;
 
 
-
-// Routes
-app.get("/", (req: Request, res: Response) => {
-  res.send(`Hey it's working !!`);
-});
 app.use('/api/inventory', inventoryRoutes);
 app.use('/api/super-inventory', superInventoryRoutes);
 app.use("/api/users", authRoute);
 app.use("/api/dashboard", authDashboard);
 
-// Server start
 const PORT: string | number = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}/`);
