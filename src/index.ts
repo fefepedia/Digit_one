@@ -7,6 +7,8 @@ import inventoryRoutes from './routes/inventoryRoutes';
 import superInventoryRoutes from './routes/superInventoryRoutes';
 import authRoute from './routes/authRoute';
 import authDashboard from './routes/authDashboard';
+import swaggerUi from 'swagger-ui-express';
+import swaggerSpec from './swagger'   ;
 
 const app = express();
 
@@ -43,6 +45,9 @@ app.use('/api/inventory', inventoryRoutes);
 app.use('/api/super-inventory', superInventoryRoutes);
 app.use("/api/users", authRoute);
 app.use("/api/dashboard", authDashboard);
+
+// Serve Swagger documentation using swagger-ui-express
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 const PORT: string | number = process.env.PORT || 3000;
 app.listen(PORT, () => {
