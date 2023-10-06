@@ -72,7 +72,10 @@ router.post('/login', async (req: express.Request, res: express.Response) => {
       return res.status(400).send(error.details[0].message);
     } else {
       const user = await User.findOne({ email: req.body.email });
-      if (!user) return res.status(400).send('Incorrect Email- ID');
+      
+      if (!user) {
+        return res.status(400).send({ message: 'Incorrect Email- ID' });
+      }
 
       const validPassword = await bcrypt.compare(
         req.body.password,
@@ -80,7 +83,7 @@ router.post('/login', async (req: express.Request, res: express.Response) => {
       );
 
       if (!validPassword) {
-        return res.status(400).send({message: 'Incorrect Password'});
+        return res.status(400).send({ message: 'Incorrect Password' });
       }
 
       const token = jwt.sign(
