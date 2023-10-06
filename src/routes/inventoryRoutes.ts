@@ -1,15 +1,18 @@
 import express from 'express';
-import { addInventory, addInventoryItem } from '../controllers/inventoryController';
+import { removeInventory, addInventory, addInventoryItem, getInventory, removeInventoryItem, updateInventory, updateInventoryItem, getAllItemsForInventory } from '../controllers/inventoryController';
 
 const router = express.Router();
 
 router.post('/add-inventory', addInventory);
-//router.put('/update-inventory');
+router.put('/update-inventory/:id', updateInventory);
+router.put('/update-inventory-item/:id', updateInventoryItem);
 //router.patch('/patch-inventory');
-//router.delete('/delete-inventory/:id');
+router.delete('/remove-inventory/:id', removeInventory);
 //router.get('/inventories');
-//router.get('/inventory/:id');
-
+router.get('/:id/items', getAllItemsForInventory);
+router.get('/:id',getInventory);
+router.delete('/remove-inventory-item/:id', removeInventoryItem);
 router.post('/add-inventory-item', addInventoryItem);
+
 
 export default router;
