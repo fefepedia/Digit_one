@@ -53,23 +53,29 @@ const loginSchema = Joi.object({
   password: Joi.string().min(6).required(),
 });
 
+
 router.post('/login', async (req: Request, res: Response) => {
-  const user = await User.findOne({ email: req.body.email });
-  if (!user) return res.status(400).send('Incorrect Email- ID');
-
-  const validPassword = await bcrypt.compare(req.body.password, (user as IUser).password);
-  if (!validPassword) return res.status(400).send('Incorrect Password');
-
   try {
     const { error } = await loginSchema.validateAsync(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
-    else {
-      const token = jwt.sign({ _id: (user as IUser)._id }, process.env.TOKEN_SECRET!);
-      res.header('auth-token', token).send(token);
+    if (error) {
+      return res.status(400).json({ error: error.details[0].message });
     }
+
+    const user = await User.findOne({ email: req.body.email });
+    if (!user) {
+      return res.status(400).json({ error: 'Incorrect Email-ID' });
+    }
+
+    const validPassword = await bcrypt.compare(req.body.password, user.password);
+    if (!validPassword) {
+      return res.status(400).json({ error: 'Incorrect Password' });
+    }
+
+    const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET!);
+    res.header('auth-token', token).json({ token });
   } catch (error) {
     console.error('Error encountered:', error);
-    res.status(500).send(error);
+    res.status(500).json({ error: 'An error occurred while logging in.' });
   }
 });
 
