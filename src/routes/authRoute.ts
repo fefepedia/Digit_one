@@ -13,7 +13,9 @@ const registerSchema = Joi.object({
   lname: Joi.string().min(3).required(),
   email: Joi.string().min(6).required().email(),
   password: Joi.string().min(6).required(),
-  role: Joi.string().valid('operator', 'admin', 'accountant').default('operator'),
+  role: Joi.string()
+    .valid('operator', 'admin', 'accountant')
+    .default('operator')
 });
 
 router.post('/register', async (req: Request, res: Response) => {
@@ -23,16 +25,16 @@ router.post('/register', async (req: Request, res: Response) => {
     return;
   }
 
-  const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash(req.body.password, salt);
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
-  const user = new User({
-    fname: req.body.fname,
-    lname: req.body.lname,
-    email: req.body.email,
-    password: hashedPassword,
-    role: req.body.role,
-  });
+    const user = new User({
+      fname: req.body.fname,
+      lname: req.body.lname,
+      email: req.body.email,
+      password: hashedPassword,
+      role: req.body.role
+    });
 
   try {
     const { error } = await registerSchema.validateAsync(req.body);
@@ -50,7 +52,7 @@ router.post('/register', async (req: Request, res: Response) => {
 
 const loginSchema = Joi.object({
   email: Joi.string().min(6).required().email(),
-  password: Joi.string().min(6).required(),
+  password: Joi.string().min(6).required()
 });
 
 
