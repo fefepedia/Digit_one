@@ -25,16 +25,16 @@ router.post('/register', async (req: Request, res: Response) => {
     return;
   }
 
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(req.body.password, salt);
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
-    const user = new User({
-      fname: req.body.fname,
-      lname: req.body.lname,
-      email: req.body.email,
-      password: hashedPassword,
-      role: req.body.role
-    });
+  const user = new User({
+    fname: req.body.fname,
+    lname: req.body.lname,
+    email: req.body.email,
+    password: hashedPassword,
+    role: req.body.role
+  });
 
   try {
     const { error } = await registerSchema.validateAsync(req.body);
@@ -55,7 +55,6 @@ const loginSchema = Joi.object({
   password: Joi.string().min(6).required()
 });
 
-
 router.post('/login', async (req: Request, res: Response) => {
   try {
     console.log('Received login request:', req.body);
@@ -68,12 +67,16 @@ router.post('/login', async (req: Request, res: Response) => {
     if (!user) {
       return res.status(400).json({ error: 'Incorrect Email-ID' });
     }
-    console.log('Received login request:', req.body);
-console.log('Request password:', req.body.password);
-console.log('Stored hashed password:', user.password);
     
-    const validPassword = await bcrypt.compare(req.body.password, user.password);
-    console.log('Password comparison result:', validPassword);   
+    console.log('Received login request:', req.body);
+    console.log('Request password:', req.body.password);
+    console.log('Stored hashed password:', user.password);
+
+    const validPassword = await bcrypt.compare(
+      req.body.password,
+      user.password
+    );
+    console.log('Password comparison result:', validPassword);
     if (!validPassword) {
       return res.status(400).json({ error: 'Incorrect Password' });
     }
@@ -82,7 +85,6 @@ console.log('Stored hashed password:', user.password);
     console.log('Generated token:', token);
     res.header('auth-token', token).json({ token });
   } catch (error) {
-  
     console.error('Error encountered:', error);
     res.status(500).json({ error: 'An error occurred while logging in.' });
   }

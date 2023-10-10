@@ -6,7 +6,7 @@ import bodyParser from 'body-parser';
 import inventoryRoutes from './routes/inventoryRoutes';
 import superInventoryRoutes from './routes/superInventoryRoutes';
 import authRoute from './routes/authRoute';
-import authDashboard from './routes/authDashboard';
+import authDashboard from './routes/admin/authDashboard';
 import swaggerUi from 'swagger-ui-express';
 import swaggerSpec from './swagger'   ;
 
