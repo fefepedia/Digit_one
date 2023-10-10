@@ -1,17 +1,23 @@
-const swaggerJsdoc = require('swagger-jsdoc');
+const swaggerJSDoc = require('swagger-jsdoc');
 
-const options = {
-  definition: {
-    openapi: '3.0.0',
-    info: {
-      title: 'Digit api',
-      version: '1.0.0',
-      description: 'Invetory endpoints',
-    },
+
+const swaggerDefinition = {
+  info: {
+    title: 'DigIT',
+    version: '1.0.0',
+    description: 'API descriptions',
   },
-  apis: ['./routes/*.js'],
+  host: 'localhost:3000', 
+  basePath: '/api', 
 };
 
-const specs = swaggerJsdoc(options);
 
-module.exports = specs;
+const options = {
+  swaggerDefinition,
+  apis: ['./routes/*.js'], 
+};
+
+
+const swaggerSpec = swaggerJSDoc(options);
+
+module.exports = swaggerSpec;
