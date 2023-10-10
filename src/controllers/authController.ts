@@ -28,41 +28,18 @@ export const register = async (req: Request, res: Response) => {
   }
 };
 
-//export const login = async (req: Request, res: Response) => {
-//  try {
-//    const user = await User.findOne({ email: req.body.email });
-//    if (!user) {
-//       return res.status(400).json({ error: 'Incorrect Email-ID' });
-//     }
-// 
-//     const validPassword = await bcrypt.compare(req.body.password, user.password);
-//     if (!validPassword) {
-//       return res.status(400).json({ error: 'Incorrect Password' });
-//     }
-// 
-//     const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET!);
-//     res.header('auth-token', token).json({ token });
-//   } catch (error) {
-//     console.error('Error encountered:', error);
-//     return res.status(500).json({ error: 'An error occurred while logging in.' });
-//   }
-// };
-
 export const login = async (req: Request, res: Response) => {
   try {
-    // Debugging: Log the request body
     console.log('Login request received:', req.body);
 
     const user = await User.findOne({ email: req.body.email });
     if (!user) {
-      // Debugging: Log the email that was not found
       console.log('User not found for email:', req.body.email);
       return res.status(400).json({ error: 'Incorrect Email-ID' });
     }
 
     const validPassword = await bcrypt.compare(req.body.password, user.password);
     if (!validPassword) {
-      // Debugging: Log if password is incorrect
       console.log('Incorrect password for user:', user.email);
       return res.status(400).json({ error: 'Incorrect Password' });
     }

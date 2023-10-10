@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
-import User, { IUser } from '../models/User'; // Import your User model with IUser interface
+import User, { IUser } from '../models/User'; 
 
 declare global {
     namespace Express {
@@ -21,8 +21,6 @@ const verify = async (req: Request, res: Response, next: NextFunction) => {
     if (!user) {
       return res.status(401).send("User not found");
     }
-
-    // Attach the user to the request
     req.user = user as IUser;
 
     next();
