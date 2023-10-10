@@ -9,8 +9,8 @@ import * as Joi from '@hapi/joi';
 const router = express.Router();
 
 const registerSchema = Joi.object({
-  fname: Joi.string().min(3).required(),
-  lname: Joi.string().min(3).required(),
+  first_name: Joi.string().min(3).required(),
+  last_name: Joi.string().min(3).required(),
   email: Joi.string().min(6).required().email(),
   password: Joi.string().min(6).required(),
   role: Joi.string()
@@ -29,8 +29,8 @@ router.post('/register', async (req: Request, res: Response) => {
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
     const user = new User({
-      fname: req.body.fname,
-      lname: req.body.lname,
+      first_name: req.body.fname,
+      last_name: req.body.lname,
       email: req.body.email,
       password: hashedPassword,
       role: req.body.role

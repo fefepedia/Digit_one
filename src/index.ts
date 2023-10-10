@@ -46,7 +46,6 @@ app.use('/api/super-inventory', superInventoryRoutes);
 app.use("/api/users", authRoute);
 app.use("/api/dashboard", authDashboard);
 
-// Serve Swagger documentation using swagger-ui-express
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 const PORT: string | number = process.env.PORT || 3000;
