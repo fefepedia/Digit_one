@@ -1,6 +1,5 @@
-import Joi from 'joi';
-import { NujRequest } from '../types/global';
-import { NextFunction, Response } from 'express';
+import Joi,{Schema, ObjectSchema} from 'joi';
+import { Request, Response, NextFunction } from 'express';
 
 export enum SchemaTypes {
   BODY = 'BODY',
@@ -13,13 +12,12 @@ interface RequestValidatorProps {
   type: SchemaTypes;
 }
 
-export const requestValidator = (
-  req: NujRequest,
+export const requestValidator = (props: RequestValidatorProps) => (
+  req: Request,
   res: Response,
-  next: NextFunction,
-  { schema }: RequestValidatorProps
+  next: NextFunction
 ) => {
-  const { error } = schema.validate(req, { abortEarly: false });
+  const { error } = props.schema.validate(req, { abortEarly: false });
 
   if (error) {
     const { details } = error;
