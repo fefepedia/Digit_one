@@ -6,7 +6,6 @@ export interface IUser extends Document {
     email: string;
     password: string;
     role: string;
-    date: Date;
     company: Types.ObjectId;
 }
 
@@ -39,10 +38,6 @@ const userSchema: Schema = new Schema({
         type: String, 
         enum: ['operator', 'admin', 'accountant'], 
         default: 'operator', 
-    },
-    date: {
-        type: Date,
-        default: Date.now(),
     },
     company: {
         type: Schema.Types.ObjectId,

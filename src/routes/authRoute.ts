@@ -8,7 +8,7 @@ import authVerify from '../middlewares/authVerify';
 
 const router = express.Router();
 
-router.use(authVerify);
+// router.use(authVerify);
 
 router.post('/register', requestValidator({ schema: registerSchema, type: SchemaTypes.BODY }), (req: Request, res: Response) => {
   register(req, res);

@@ -16,6 +16,7 @@ export const createSuperInventory = async (req: Request, res: Response) => {
 
     return res.status(201).json(savedSuperInventory);
   } catch (error) {
+    console.error(error);
     return res.status(500).json({ error: 'An error occurred while creating the super inventory.' });
   }
 };

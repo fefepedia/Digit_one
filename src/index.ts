@@ -18,7 +18,7 @@ const app = express();
 const allowedOrigins = ['http://localhost:3001', 'http://localhost:3000'];
 
 // Apply the 'verify' middleware globally
-app.use(verify);
+// app.use(verify);
 
 app.use(bodyParser.json());
 app.use(
@@ -32,17 +32,22 @@ app.use(
     },
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
-    optionsSuccessStatus: 204,
+    optionsSuccessStatus: 204
   })
 );
 
 dotenv.config();
-console.log(process.env.TOKEN_SECRET);
 
-mongoose.connect('mongodb://127.0.0.1:27017/digit-one?directConnection=true', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-} as any).then(() => console.log('connected to db')).catch((error) => console.error('DB Connection Error:', error));
+mongoose
+  .connect(
+    process.env.DB_CONNECTION as string,
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+    } as any
+  )
+  .then(() => console.log('connected to db'))
+  .catch((error) => console.error('DB Connection Error:', error));
 
 app.use('/api/inventory', inventoryRoutes);
 app.use('/api/super-inventory', superInventoryRoutes);
