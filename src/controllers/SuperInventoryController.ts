@@ -1,10 +1,17 @@
 import SuperInventory from '../models/SuperInventory';
 import { Request, Response } from 'express';
 import mongoose from 'mongoose';
+import Company from '../models/Company'; // Adjust the path to match the actual location of your Company model
 
 export const createSuperInventory = async (req: Request, res: Response) => {
   try {
-    const newSuperInventory = new SuperInventory();
+    if (!req.user || !req.user.company) {
+      return res.status(400).json({ error: 'User does not have a company.' });
+    }
+
+    const companyId = req.user.company;
+
+    const newSuperInventory = new SuperInventory({ company: companyId });
     const savedSuperInventory = await newSuperInventory.save();
 
     return res.status(201).json(savedSuperInventory);
@@ -35,6 +42,7 @@ export const addInventoryToSuperInventory = async (req: Request, res: Response) 
 };
 
 
+
 export const removeInventoryFromSuperInventory = async (req: Request, res: Response) => {
   try {
     const superInventory = await SuperInventory.findById(req.params.id);
@@ -43,14 +51,25 @@ export const removeInventoryFromSuperInventory = async (req: Request, res: Respo
       return res.status(404).json({ error: 'SuperInventory not found.' });
     }
 
-    // Convert string to ObjectId
     const objectId = new mongoose.Types.ObjectId(req.params.inventoryId);
-    
+
     const index = superInventory.inventories.indexOf(objectId);
     
     if (index > -1) {
       superInventory.inventories.splice(index, 1);
       await superInventory.save();
+
+      const company = await Company.findById(superInventory.company);
+
+      if (company) {
+        
+        const companyIndex = company.superinventories.indexOf(objectId);
+
+        if (companyIndex > -1) {
+          company.superinventories.splice(companyIndex, 1);
+          await company.save();
+        }
+      }
     }
 
     return res.status(200).json(superInventory);
@@ -58,6 +77,7 @@ export const removeInventoryFromSuperInventory = async (req: Request, res: Respo
     return res.status(500).json({ error: 'An error occurred while removing an inventory from the super inventory.' });
   }
 };
+
 
 export const getSuperInventoryById = async (req: Request, res: Response) => {
   try {

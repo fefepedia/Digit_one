@@ -167,7 +167,7 @@ export const getAllItemsForInventory = async (req: Request, res: Response) => {
   try {
     const inventoryId = req.params.id;
     console.log('Trying to fetch items for inventoryId:', inventoryId);
-    const inventory = await Inventory.findById(inventoryId).populate('items'); // Populate the 'items' field
+    const inventory = await Inventory.findById(inventoryId).populate('items');
 
     if (!inventory) {
       console.log('Inventory not found for ID:', inventoryId);

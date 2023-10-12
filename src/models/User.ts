@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document } from 'mongoose';
+import mongoose, { Schema, Document, Types } from 'mongoose';
 
 export interface IUser extends Document {
     first_name: string;
@@ -7,6 +7,7 @@ export interface IUser extends Document {
     password: string;
     role: string;
     date: Date;
+    company: Types.ObjectId;
 }
 
 const userSchema: Schema = new Schema({
@@ -42,6 +43,10 @@ const userSchema: Schema = new Schema({
     date: {
         type: Date,
         default: Date.now(),
+    },
+    company: {
+        type: Schema.Types.ObjectId,
+        ref: 'Company',
     },
 });
 

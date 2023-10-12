@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express';
+import express from 'express';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import cors from 'cors';
@@ -8,11 +8,17 @@ import superInventoryRoutes from './routes/superInventoryRoutes';
 import authRoute from './routes/authRoute';
 import authDashboard from './routes/admin/authDashboard';
 import swaggerUi from 'swagger-ui-express';
-import swaggerSpec from './swagger'   ;
+import swaggerSpec from './swagger';
+
+// Import your 'verify' middleware
+import verify from './middlewares/verify'; // Modify the path to your actual middleware location
 
 const app = express();
 
 const allowedOrigins = ['http://localhost:3001', 'http://localhost:3000'];
+
+// Apply the 'verify' middleware globally
+app.use(verify);
 
 app.use(bodyParser.json());
 app.use(
@@ -30,21 +36,18 @@ app.use(
   })
 );
 
-
 dotenv.config();
 console.log(process.env.TOKEN_SECRET);
 
 mongoose.connect('mongodb://127.0.0.1:27017/digit-one?directConnection=true', {
   useNewUrlParser: true,
-  useUnifiedTopology: true
-} as any).then(() => console.log("connected to db"))
-  .catch((error) => console.error("DB Connection Error:", error));;
-
+  useUnifiedTopology: true,
+} as any).then(() => console.log('connected to db')).catch((error) => console.error('DB Connection Error:', error));
 
 app.use('/api/inventory', inventoryRoutes);
 app.use('/api/super-inventory', superInventoryRoutes);
-app.use("/api/users", authRoute);
-app.use("/api/dashboard", authDashboard);
+app.use('/api/users', authRoute);
+app.use('/api/dashboard', authDashboard);
 
 // Serve Swagger documentation using swagger-ui-express
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));

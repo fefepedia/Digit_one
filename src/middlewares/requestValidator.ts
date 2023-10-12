@@ -1,4 +1,4 @@
-import Joi,{Schema, ObjectSchema} from 'joi';
+import Joi, { Schema, ObjectSchema } from 'joi';
 import { Request, Response, NextFunction } from 'express';
 
 export enum SchemaTypes {
@@ -8,7 +8,7 @@ export enum SchemaTypes {
 }
 
 interface RequestValidatorProps {
-  schema: Joi.Schema;
+  schema: ObjectSchema;
   type: SchemaTypes;
 }
 

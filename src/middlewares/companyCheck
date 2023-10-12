@@ -1,0 +1,44 @@
+import { Request, Response, NextFunction } from 'express';
+import user, { IUser } from '../models/User';
+import SuperInventory from '../models/SuperInventory';
+import Inventory from '../models/Inventory';
+
+export async function checkCompanyAccess(req: Request, res: Response, next: NextFunction) {
+  const userCompanyId: string = req.user!.company.toString(); // Convert the ObjectId to a string
+
+  if (req.route.path.includes('/super-inventories') && req.params.superInventoryId) {
+    const superInventoryId = req.params.superInventoryId;
+
+    try {
+      const superInventory = await SuperInventory.findById(superInventoryId).exec();
+
+      if (!superInventory) {
+        return res.status(404).json({ error: 'Super inventory not found.' });
+      }
+
+      if (superInventory.company.toString() !== userCompanyId) {
+        return res.status(403).json({ error: 'Access denied. Super inventory does not belong to the user\'s company.' });
+      }
+    } catch (error) {
+      return res.status(500).json({ error: 'An error occurred while checking access.' });
+    }
+  } else if (req.route.path.includes('/inventories') && req.params.inventoryId) {
+    const inventoryId = req.params.inventoryId;
+
+    try {
+      const inventory = await Inventory.findById(inventoryId).exec();
+
+      if (!inventory) {
+        return res.status(404).json({ error: 'Inventory not found.' });
+      }
+
+      if (inventory.company.toString() !== userCompanyId) {
+        return res.status(403).json({ error: 'Access denied. Inventory does not belong to the user\'s company.' });
+      }
+    } catch (error) {
+      return res.status(500).json({ error: 'An error occurred while checking access.' });
+    }
+  }
+
+  next();
+}
