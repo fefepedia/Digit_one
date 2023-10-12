@@ -8,7 +8,9 @@ export const createCompany = async (req: Request, res: Response) => {
     const savedCompany = await newCompany.save();
     return res.status(201).json(savedCompany);
   } catch (error) {
-    return res.status(500).json({ error: 'An error occurred while creating the company.' });
+    return res
+      .status(500)
+      .json({ error: 'An error occurred while creating the company.' });
   }
 };
 
@@ -22,10 +24,11 @@ export const removeCompany = async (req: Request, res: Response) => {
 
     return res.status(200).json({ message: 'Company removed successfully.' });
   } catch (error) {
-    return res.status(500).json({ error: 'An error occurred while removing the company.' });
+    return res
+      .status(500)
+      .json({ error: 'An error occurred while removing the company.' });
   }
 };
-
 
 export const getCompanyById = async (req: Request, res: Response) => {
   try {
@@ -37,7 +40,9 @@ export const getCompanyById = async (req: Request, res: Response) => {
 
     return res.status(200).json(company);
   } catch (error) {
-    return res.status(500).json({ error: 'An error occurred while fetching the company.' });
+    return res
+      .status(500)
+      .json({ error: 'An error occurred while fetching the company.' });
   }
 };
 
@@ -46,6 +51,8 @@ export const getAllCompanies = async (_req: Request, res: Response) => {
     const companies = await Company.find();
     return res.status(200).json(companies);
   } catch (error) {
-    return res.status(500).json({ error: 'An error occurred while fetching all companies.' });
+    return res
+      .status(500)
+      .json({ error: 'An error occurred while fetching all companies.' });
   }
 };

@@ -136,9 +136,6 @@ const removeFromSuperInventory = async (
   }
 };
 
-
-
-
 export const removeInventory = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
@@ -160,7 +157,6 @@ export const removeInventory = async (req: Request, res: Response) => {
       .json({ error: 'An error occurred while removing the inventory.' });
   }
 };
-
 
 export const getAllItemsForInventory = async (req: Request, res: Response) => {
   console.log('Inside getAllItemsForInventory');
@@ -184,4 +180,3 @@ export const getAllItemsForInventory = async (req: Request, res: Response) => {
       .json({ error: 'An error occurred while fetching the items.' });
   }
 };
-
