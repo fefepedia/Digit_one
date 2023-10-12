@@ -9,9 +9,9 @@ import authRoute from './routes/authRoute';
 import authDashboard from './routes/admin/authDashboard';
 import swaggerUi from 'swagger-ui-express';
 import swaggerSpec from './swagger';
-
+import companyRoutes from './routes/companyRoutes';
 // Import your 'verify' middleware
-import verify from './middlewares/verify'; // Modify the path to your actual middleware location
+import verify from './middlewares/authVerify'; // Modify the path to your actual middleware location
 
 const app = express();
 
@@ -48,6 +48,7 @@ app.use('/api/inventory', inventoryRoutes);
 app.use('/api/super-inventory', superInventoryRoutes);
 app.use('/api/users', authRoute);
 app.use('/api/dashboard', authDashboard);
+app.use('/api/company', companyRoutes);
 
 // Serve Swagger documentation using swagger-ui-express
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
