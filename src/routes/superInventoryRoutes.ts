@@ -14,6 +14,6 @@ router.post('/add-inventory-to-super', requestValidator({ schema: superInventory
 router.post('/add_super-to-company',requestValidator({ schema: superInventorySchema, type: SchemaTypes.BODY }),addSuperInventoryToCompany);
 router.get('/super-inventory/:id', getSuperInventoryById);
 router.get('/super-inventories', getAllSuperInventories);
-router.delete('/remove-inventory-from-super/:id/:inventoryId', checkUserRole('admin'), requestValidator({ schema: superInventorySchema, type: SchemaTypes.PARAMS }), removeInventoryFromSuperInventory);
+router.delete('/remove-inventory-from-super/:id/:inventoryId', requestValidator({ schema: superInventorySchema, type: SchemaTypes.PARAMS }), removeInventoryFromSuperInventory);
 
 export default router;
