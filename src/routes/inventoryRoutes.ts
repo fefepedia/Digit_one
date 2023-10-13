@@ -1,11 +1,9 @@
 import express from 'express';
 import { removeInventory, addInventory, addInventoryItem, getInventory, removeInventoryItem, updateInventory, updateInventoryItem, getAllItemsForInventory } from '../controllers/inventoryController';
-import { checkUserRole } from '../middlewares/rbac';
-import authVerify from '../middlewares/authVerify';
+//import { checkUserRole } from '../middlewares/rbac';
+//import authVerify from '../middlewares/authVerify';
 import {inventorySchema, inventoryItemSchema} from '../utils/validation/inventoriesSchema'
-import { requestValidator } from '../middlewares/requestValidator'; 
-
-import { SchemaTypes } from '../middlewares/requestValidator';
+import { requestValidator,SchemaTypes } from '../middlewares/requestValidator'; 
 const router = express.Router();
 
 /**

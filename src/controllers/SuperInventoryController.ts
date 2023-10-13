@@ -114,24 +114,23 @@ export const getAllSuperInventories = async (req: Request, res: Response) => {
 };
 export const addSuperInventoryToCompany = async (req: Request, res: Response) => {
   try {
-    const companyId = req.params.companyId;
-    const { name } = req.body;
-    console.log('Received request to add SuperInventory to company with ID:', companyId);
+    const { companyId, superInventoryId } = req.body;
 
     const company = await Company.findById(companyId);
+    const superInventory = await SuperInventory.findById(superInventoryId);
 
     if (!company) {
       return res.status(404).json({ error: 'Company not found.' });
     }
 
-    const superInventory = new SuperInventory({ name, company: companyId });
-    const savedSuperInventory = await superInventory.save();
-    console.log('SuperInventory saved:', savedSuperInventory);
+    if (!superInventory) {
+      return res.status(404).json({ error: 'SuperInventory not found.' });
+    }
 
-    company.superinventories.push(savedSuperInventory._id);
+    company.superinventories.push(superInventoryId);
     await company.save();
 
-    return res.status(201).json(savedSuperInventory);
+    return res.status(201).json(superInventory);
   } catch (error) {
     console.error('Error occurred while adding SuperInventory to the company:', error);
     return res.status(500).json({ error: 'An error occurred while adding SuperInventory to the company.' });

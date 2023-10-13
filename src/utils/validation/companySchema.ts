@@ -1,7 +1,7 @@
 import Joi from 'joi';
 
 const createCompanySchema = Joi.object({
-  name: Joi.string().min(2).max(255).required(),
+  name: Joi.string().min(2).max(255),
 });
 
 module.exports = {
