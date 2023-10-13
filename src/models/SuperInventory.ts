@@ -9,7 +9,6 @@ export interface ISuperInventory extends Document {
 const SuperInventorySchema: Schema = new Schema({
   name: {
     type: String,
-    required: true,
   },
   inventories: [{
     type: Schema.Types.ObjectId,
@@ -17,8 +16,7 @@ const SuperInventorySchema: Schema = new Schema({
   }],
   company: {
     type: Schema.Types.ObjectId,
-    ref: 'Company',
-    required: true, 
+    ref: 'Company', 
   }
 });
 

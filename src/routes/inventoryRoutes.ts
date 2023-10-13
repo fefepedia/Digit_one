@@ -71,7 +71,7 @@ router.put('/update-inventory/:id', requestValidator({ schema: inventorySchema, 
  *         description: Inventory not found.
  */
 
-router.put('/update-inventory-item/:id', checkUserRole('admin'), requestValidator({ schema: inventoryItemSchema, type: SchemaTypes.BODY }), updateInventoryItem);
+router.put('/update-inventory-item/:id', requestValidator({ schema: inventoryItemSchema, type: SchemaTypes.BODY }), updateInventoryItem);
 
 /**
  * @swagger
@@ -104,7 +104,7 @@ router.put('/update-inventory-item/:id', checkUserRole('admin'), requestValidato
  */
 
 //router.patch('/patch-inventory');
-router.delete('/remove-inventory/:id', checkUserRole('admin'), removeInventory);
+router.delete('/remove-inventory/:id', removeInventory);
 //router.get('/inventories');
 router.get('/:id/items', getAllItemsForInventory);
 
@@ -132,7 +132,7 @@ router.get('/:id/items', getAllItemsForInventory);
 
 router.get('/:id', getInventory);
 
-router.delete('/remove-inventory-item/:id', checkUserRole('admin'), removeInventoryItem);
-router.post('/add-inventory-item', checkUserRole('admin'), requestValidator({ schema: inventoryItemSchema, type: SchemaTypes.BODY }), addInventoryItem);
+router.delete('/remove-inventory-item/:id', removeInventoryItem);
+router.post('/add-inventory-item', requestValidator({ schema: inventoryItemSchema, type: SchemaTypes.BODY }), addInventoryItem);
 
 export default router;

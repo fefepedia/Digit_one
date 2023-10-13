@@ -2,33 +2,19 @@ import SuperInventory from '../models/SuperInventory';
 import { Request, Response } from 'express';
 import mongoose from 'mongoose';
 import Company from '../models/Company';
+import Inventory from '../models/Inventory';
+
 
 export const createSuperInventory = async (req: Request, res: Response) => {
   try {
-    console.log('User:', req.user);
-    console.log('Company:', req.user?.company);
-    //console.log('usercompany:', req.user?.company.id);
-    if (!req.user || !req.user.company  /* || !req.user.company.id */ ) {
-      return res.status(400).json({ error: 'User does not have a company.' });
+    const { name } = req.body;
+
+    if (!name) {
+      return res.status(400).json({ error: 'Name is required for the super inventory.' });
     }
 
-    const companyId = req.user.company.id;
-    const { name, company } = req.body;
+    const newSuperInventory = new SuperInventory({ name });
 
-  //  if (!company || company.toString() !== companyId.toString()) {
-    //  return res.status(400).json({ error: 'Company in request does not match user company.' });
-    //}
-
-    const updatedCompany = await Company.findById(companyId).exec();
-
-    if (!updatedCompany) {
-      return res.status(404).json({ error: 'Company not found.' });
-    }
-
-    updatedCompany.superinventories.push(company);
-    await updatedCompany.save();
-
-    const newSuperInventory = new SuperInventory({ name, company });
     const savedSuperInventory = await newSuperInventory.save();
 
     return res.status(201).json(savedSuperInventory);
@@ -44,9 +30,14 @@ export const addInventoryToSuperInventory = async (req: Request, res: Response) 
   try {
     const { superInventoryId, inventoryId } = req.body;
     const superInventory = await SuperInventory.findById(superInventoryId);
-    
+    const inventory = await Inventory.findById(inventoryId);
+
     if (!superInventory) {
       return res.status(404).json({ error: 'SuperInventory not found.' });
+    }
+
+    if (!inventory) {
+      return res.status(404).json({ error: 'Inventory not found.' });
     }
 
     if (!superInventory.inventories.includes(inventoryId)) {

@@ -5,14 +5,14 @@ export interface IInventory extends Document {
   name: string;
   quantityType: string;
   items: Types.ObjectId[];
-  company: Types.ObjectId; // Add the 'company' field
+  company: Types.ObjectId; 
 }
 
 const InventorySchema: Schema = new Schema({
   name: { type: String, required: true },
   quantityType: { type: String, required: true },
   items: [{ type: Types.ObjectId, ref: 'InventoryItem' }],
-  company: { type: Types.ObjectId, ref: 'Company', required: true }, // Reference to Company model
+  company: { type: Types.ObjectId, ref: 'Company'}, 
 });
 
 export default mongoose.model<IInventory>('Inventory', InventorySchema);

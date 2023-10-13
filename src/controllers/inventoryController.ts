@@ -6,13 +6,24 @@ import { Types } from 'mongoose';
 import mongoose from 'mongoose';
 import SuperInventory from '../models/SuperInventory';
 
-// Add new Inventory
 export const addInventory = async (req: Request, res: Response) => {
-  const sanitizedInventoryObject = inventorySanitizer(req.body);
-  const newInventory: IInventory = new Inventory(sanitizedInventoryObject);
-  const result = await newInventory.save();
-  return res.json(result).status(200);
+  try {
+    const newInventory = new Inventory({
+      name: req.body.name,
+      quantityType: req.body.quantityType,
+      company: req.user?.company,
+    });
+
+    const result = await newInventory.save();
+    return res.json(result).status(200);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: 'An error occurred while adding the inventory.' });
+  }
 };
+
+
+
 
 export const getInventory = async (req: Request, res: Response) => {
   try {
