@@ -1,17 +1,34 @@
 import SuperInventory from '../models/SuperInventory';
 import { Request, Response } from 'express';
 import mongoose from 'mongoose';
-import Company from '../models/Company'; // Adjust the path to match the actual location of your Company model
+import Company from '../models/Company';
 
 export const createSuperInventory = async (req: Request, res: Response) => {
   try {
-    if (!req.user || !req.user.company) {
+    console.log('User:', req.user);
+    console.log('Company:', req.user?.company);
+    //console.log('usercompany:', req.user?.company.id);
+    if (!req.user || !req.user.company  /* || !req.user.company.id */ ) {
       return res.status(400).json({ error: 'User does not have a company.' });
     }
 
-    const companyId = req.user.company;
+    const companyId = req.user.company.id;
+    const { name, company } = req.body;
 
-    const newSuperInventory = new SuperInventory({ company: companyId });
+  //  if (!company || company.toString() !== companyId.toString()) {
+    //  return res.status(400).json({ error: 'Company in request does not match user company.' });
+    //}
+
+    const updatedCompany = await Company.findById(companyId).exec();
+
+    if (!updatedCompany) {
+      return res.status(404).json({ error: 'Company not found.' });
+    }
+
+    updatedCompany.superinventories.push(company);
+    await updatedCompany.save();
+
+    const newSuperInventory = new SuperInventory({ name, company });
     const savedSuperInventory = await newSuperInventory.save();
 
     return res.status(201).json(savedSuperInventory);
@@ -20,6 +37,7 @@ export const createSuperInventory = async (req: Request, res: Response) => {
     return res.status(500).json({ error: 'An error occurred while creating the super inventory.' });
   }
 };
+
 
 
 export const addInventoryToSuperInventory = async (req: Request, res: Response) => {
@@ -101,5 +119,30 @@ export const getAllSuperInventories = async (req: Request, res: Response) => {
     return res.status(200).json(superInventories);
   } catch (error) {
     return res.status(500).json({ error: 'An error occurred while fetching all super inventories.' });
+  }
+};
+export const addSuperInventoryToCompany = async (req: Request, res: Response) => {
+  try {
+    const companyId = req.params.companyId;
+    const { name } = req.body;
+    console.log('Received request to add SuperInventory to company with ID:', companyId);
+
+    const company = await Company.findById(companyId);
+
+    if (!company) {
+      return res.status(404).json({ error: 'Company not found.' });
+    }
+
+    const superInventory = new SuperInventory({ name, company: companyId });
+    const savedSuperInventory = await superInventory.save();
+    console.log('SuperInventory saved:', savedSuperInventory);
+
+    company.superinventories.push(savedSuperInventory._id);
+    await company.save();
+
+    return res.status(201).json(savedSuperInventory);
+  } catch (error) {
+    console.error('Error occurred while adding SuperInventory to the company:', error);
+    return res.status(500).json({ error: 'An error occurred while adding SuperInventory to the company.' });
   }
 };

@@ -7,7 +7,6 @@ import { requestValidator } from '../middlewares/requestValidator';
 
 import { SchemaTypes } from '../middlewares/requestValidator';
 const router = express.Router();
-router.use(authVerify);
 
 /**
  * @swagger
@@ -38,9 +37,9 @@ router.use(authVerify);
  *         description: Bad request.
  */
 
-router.post('/add-inventory', checkUserRole('admin'), requestValidator({ schema: inventorySchema, type: SchemaTypes.BODY }), addInventory);
+router.post('/add-inventory', requestValidator({ schema: inventorySchema, type: SchemaTypes.BODY }), addInventory);
 
-router.put('/update-inventory/:id', checkUserRole('admin'), requestValidator({ schema: inventorySchema, type: SchemaTypes.BODY }), updateInventory);
+router.put('/update-inventory/:id', requestValidator({ schema: inventorySchema, type: SchemaTypes.BODY }), updateInventory);
 
 /**
  * @swagger

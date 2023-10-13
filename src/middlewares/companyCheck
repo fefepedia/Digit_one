@@ -4,7 +4,7 @@ import SuperInventory from '../models/SuperInventory';
 import Inventory from '../models/Inventory';
 
 export async function checkCompanyAccess(req: Request, res: Response, next: NextFunction) {
-  const userCompanyId: string = req.user!.company.toString(); // Convert the ObjectId to a string
+  const userCompanyId: string = req.user!.company.toString(); 
 
   if (req.route.path.includes('/super-inventories') && req.params.superInventoryId) {
     const superInventoryId = req.params.superInventoryId;
