@@ -1,9 +1,21 @@
 import express from 'express';
-import { removeInventory, addInventory, addInventoryItem, getInventory, removeInventoryItem, updateInventory, updateInventoryItem, getAllItemsForInventory } from '../controllers/inventoryController';
+import {
+  removeInventory,
+  addInventory,
+  addInventoryItem,
+  getInventory,
+  removeInventoryItem,
+  updateInventory,
+  updateInventoryItem,
+  getAllItemsForInventory
+} from '../controllers/inventoryController';
 //import { checkUserRole } from '../middlewares/rbac';
 //import authVerify from '../middlewares/authVerify';
-import {inventorySchema, inventoryItemSchema} from '../utils/validation/inventoriesSchema'
-import { requestValidator,SchemaTypes } from '../middlewares/requestValidator'; 
+import {
+  inventorySchema,
+  inventoryItemSchema
+} from '../utils/validation/inventoriesSchema';
+import { requestValidator, SchemaTypes } from '../middlewares/requestValidator';
 const router = express.Router();
 
 /**
@@ -35,9 +47,17 @@ const router = express.Router();
  *         description: Bad request.
  */
 
-router.post('/add-inventory', requestValidator({ schema: inventorySchema, type: SchemaTypes.BODY }), addInventory);
+router.post(
+  '/add-inventory',
+  requestValidator({ schema: inventorySchema, type: SchemaTypes.BODY }),
+  addInventory
+);
 
-router.put('/update-inventory/:id', requestValidator({ schema: inventorySchema, type: SchemaTypes.BODY }), updateInventory);
+router.put(
+  '/update-inventory/:id',
+  requestValidator({ schema: inventorySchema, type: SchemaTypes.BODY }),
+  updateInventory
+);
 
 /**
  * @swagger
@@ -69,7 +89,11 @@ router.put('/update-inventory/:id', requestValidator({ schema: inventorySchema, 
  *         description: Inventory not found.
  */
 
-router.put('/update-inventory-item/:id', requestValidator({ schema: inventoryItemSchema, type: SchemaTypes.BODY }), updateInventoryItem);
+router.put(
+  '/update-inventory-item/:id',
+  requestValidator({ schema: inventoryItemSchema, type: SchemaTypes.BODY }),
+  updateInventoryItem
+);
 
 /**
  * @swagger
@@ -131,6 +155,10 @@ router.get('/:id/items', getAllItemsForInventory);
 router.get('/:id', getInventory);
 
 router.delete('/remove-inventory-item/:id', removeInventoryItem);
-router.post('/add-inventory-item', requestValidator({ schema: inventoryItemSchema, type: SchemaTypes.BODY }), addInventoryItem);
+router.post(
+  '/add-inventory-item',
+  requestValidator({ schema: inventoryItemSchema, type: SchemaTypes.BODY }),
+  addInventoryItem
+);
 
 export default router;

@@ -18,9 +18,8 @@ const superInventorySchema = Joi.object({
   name: Joi.string().min(3),
   inventories: Joi.array().items(Joi.string()).optional(),
   company: Joi.string(),
-  superInventoryId: Joi.string(), 
-  inventoryId: Joi.string() 
+  superInventoryId: Joi.string(),
+  inventoryId: Joi.string()
 });
 
 export { inventorySchema, inventoryItemSchema, superInventorySchema };
-

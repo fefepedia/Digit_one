@@ -11,19 +11,18 @@ export const addInventory = async (req: Request, res: Response) => {
     const newInventory = new Inventory({
       name: req.body.name,
       quantityType: req.body.quantityType,
-      company: req.user?.company,
+      company: req.user?.company
     });
 
     const result = await newInventory.save();
     return res.json(result).status(200);
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ error: 'An error occurred while adding the inventory.' });
+    return res
+      .status(500)
+      .json({ error: 'An error occurred while adding the inventory.' });
   }
 };
-
-
-
 
 export const getInventory = async (req: Request, res: Response) => {
   try {
@@ -147,9 +146,6 @@ const removeFromSuperInventory = async (
   }
 };
 
-
-
-
 export const removeInventory = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
@@ -171,7 +167,6 @@ export const removeInventory = async (req: Request, res: Response) => {
       .json({ error: 'An error occurred while removing the inventory.' });
   }
 };
-
 
 export const getAllItemsForInventory = async (req: Request, res: Response) => {
   console.log('Inside getAllItemsForInventory');
@@ -195,4 +190,3 @@ export const getAllItemsForInventory = async (req: Request, res: Response) => {
       .json({ error: 'An error occurred while fetching the items.' });
   }
 };
-

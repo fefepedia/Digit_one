@@ -18,7 +18,7 @@ const app = express();
 const allowedOrigins = ['http://localhost:3001', 'http://localhost:3000'];
 
 // Apply the 'verify' middleware globally
- //app.use(verify);
+//app.use(verify);
 
 app.use(bodyParser.json());
 app.use(

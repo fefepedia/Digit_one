@@ -8,14 +8,14 @@ export interface ICompany extends Document {
 const CompanySchema: Schema = new Schema({
   name: {
     type: String,
-    required: true,
+    required: true
   },
   superinventories: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'SuperInventory',
-    },
-  ],
+      ref: 'SuperInventory'
+    }
+  ]
 });
 
 export default mongoose.model<ICompany>('Company', CompanySchema);

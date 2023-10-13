@@ -10,12 +10,20 @@ const router = express.Router();
 
 // router.use(authVerify);
 
-router.post('/register', requestValidator({ schema: registerSchema, type: SchemaTypes.BODY }), (req: Request, res: Response) => {
-  register(req, res);
-});
+router.post(
+  '/register',
+  requestValidator({ schema: registerSchema, type: SchemaTypes.BODY }),
+  (req: Request, res: Response) => {
+    register(req, res);
+  }
+);
 
-router.post('/login', requestValidator({ schema: loginSchema, type: SchemaTypes.BODY }), (req: Request, res: Response) => {
-  login(req, res);
-});
+router.post(
+  '/login',
+  requestValidator({ schema: loginSchema, type: SchemaTypes.BODY }),
+  (req: Request, res: Response) => {
+    login(req, res);
+  }
+);
 
 export default router;

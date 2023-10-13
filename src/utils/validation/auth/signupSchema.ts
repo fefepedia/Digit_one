@@ -5,7 +5,9 @@ const signupSchema = Joi.object({
   last_name: Joi.string().required(),
   email: Joi.string().email().required(),
   password: Joi.string().min(6).required(),
-  role: Joi.string().valid('admin', 'operator', 'accountant').default('operator'),
+  role: Joi.string()
+    .valid('admin', 'operator', 'accountant')
+    .default('operator')
 });
 
 export default signupSchema;

@@ -8,16 +8,21 @@ export interface ISuperInventory extends Document {
 
 const SuperInventorySchema: Schema = new Schema({
   name: {
-    type: String,
+    type: String
   },
-  inventories: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Inventory'
-  }],
+  inventories: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Inventory'
+    }
+  ],
   company: {
     type: Schema.Types.ObjectId,
-    ref: 'Company', 
+    ref: 'Company'
   }
 });
 
-export default mongoose.model<ISuperInventory>('SuperInventory', SuperInventorySchema);
+export default mongoose.model<ISuperInventory>(
+  'SuperInventory',
+  SuperInventorySchema
+);

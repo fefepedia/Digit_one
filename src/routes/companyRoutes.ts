@@ -1,11 +1,18 @@
 import express from 'express';
 //import { Request, Response } from 'express';
-import { createCompany, removeCompany, getCompanyById, getAllCompanies, addUserToCompany, getUsersByCompany} from '../controllers/companyController'
+import {
+  createCompany,
+  removeCompany,
+  getCompanyById,
+  getAllCompanies,
+  addUserToCompany,
+  getUsersByCompany
+} from '../controllers/companyController';
 //import { SchemaTypes,requestValidator } from '../middlewares/requestValidator';
 //import createCompanySchema from '../utils/validation/companySchema'
 const router = express.Router();
 
-router.post('/create-company',createCompany)
+router.post('/create-company', createCompany);
 
 router.delete('/remove-company/:id', removeCompany);
 

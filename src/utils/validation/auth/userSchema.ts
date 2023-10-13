@@ -5,8 +5,10 @@ const userSchema = Joi.object({
   last_name: Joi.string().required(),
   email: Joi.string().email().required(),
   password: Joi.string().min(6).required(),
-  role: Joi.string().valid('admin', 'operator', 'accountant').default('operator'),
-  company: Joi.string(),
+  role: Joi.string()
+    .valid('admin', 'operator', 'accountant')
+    .default('operator'),
+  company: Joi.string()
 });
 
 export default userSchema;
