@@ -1,4 +1,6 @@
 import Joi from 'joi';
+import { IInventory } from '../../models/Inventory';
+import { ISuperInventory } from '../../models/SuperInventory';
 
 const inventorySchema = Joi.object({
   name: Joi.string().min(3).required(),
@@ -15,11 +17,18 @@ const inventoryItemSchema = Joi.object({
 });
 
 const superInventorySchema = Joi.object({
-  name: Joi.string().min(3),
+  name: Joi.string().min(3).required(),
   inventories: Joi.array().items(Joi.string()).optional(),
-  company: Joi.string(),
-  superInventoryId: Joi.string(),
-  inventoryId: Joi.string()
+  companyId: Joi.string().required()
 });
 
-export { inventorySchema, inventoryItemSchema, superInventorySchema };
+const updateSuperInventorySchema = Joi.object<Partial<ISuperInventory>>({
+  // .. rest of props, whatever
+});
+
+export {
+  inventorySchema,
+  inventoryItemSchema,
+  superInventorySchema,
+  updateSuperInventorySchema
+};

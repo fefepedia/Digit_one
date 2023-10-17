@@ -8,12 +8,6 @@ export const createSuperInventory = async (req: Request, res: Response) => {
   try {
     const { name } = req.body;
 
-    if (!name) {
-      return res
-        .status(400)
-        .json({ error: 'Name is required for the super inventory.' });
-    }
-
     const newSuperInventory = new SuperInventory({ name });
 
     const savedSuperInventory = await newSuperInventory.save();
@@ -51,12 +45,10 @@ export const addInventoryToSuperInventory = async (
 
     return res.status(200).json(superInventory);
   } catch (error) {
-    return res
-      .status(500)
-      .json({
-        error:
-          'An error occurred while adding an inventory to the super inventory.'
-      });
+    return res.status(500).json({
+      error:
+        'An error occurred while adding an inventory to the super inventory.'
+    });
   }
 };
 
@@ -93,12 +85,10 @@ export const removeInventoryFromSuperInventory = async (
 
     return res.status(200).json(superInventory);
   } catch (error) {
-    return res
-      .status(500)
-      .json({
-        error:
-          'An error occurred while removing an inventory from the super inventory.'
-      });
+    return res.status(500).json({
+      error:
+        'An error occurred while removing an inventory from the super inventory.'
+    });
   }
 };
 
@@ -128,11 +118,9 @@ export const getAllSuperInventories = async (req: Request, res: Response) => {
 
     return res.status(200).json(superInventories);
   } catch (error) {
-    return res
-      .status(500)
-      .json({
-        error: 'An error occurred while fetching all super inventories.'
-      });
+    return res.status(500).json({
+      error: 'An error occurred while fetching all super inventories.'
+    });
   }
 };
 export const addSuperInventoryToCompany = async (
@@ -162,10 +150,8 @@ export const addSuperInventoryToCompany = async (
       'Error occurred while adding SuperInventory to the company:',
       error
     );
-    return res
-      .status(500)
-      .json({
-        error: 'An error occurred while adding SuperInventory to the company.'
-      });
+    return res.status(500).json({
+      error: 'An error occurred while adding SuperInventory to the company.'
+    });
   }
 };
